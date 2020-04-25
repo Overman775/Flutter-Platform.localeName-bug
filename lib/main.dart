@@ -66,8 +66,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    setLocale();
-    //setLocaleHack();
+    //setLocale();
+    setLocaleHack();
   }
 
   void setLocale() {
@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     while (Platform.localeName == null) {
       loging('while Platform.localeName: ${Platform.localeName}');
-      await Future.delayed(const Duration(milliseconds: 1), () {});
+      await Future.delayed(const Duration(milliseconds: 3), () {});
     }
 
     loging('set Platform.localeName: ${Platform.localeName}');
@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
     var differenceTime = DateTime.now().difference(begin);
 
     loging('Took time $differenceTime');
-    
+
     setState(() {
       locale = Platform.localeName;
     });
