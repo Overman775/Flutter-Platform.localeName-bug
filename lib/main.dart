@@ -50,6 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   String locale;
 
+  String log_string = '';
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -76,8 +78,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<String> setLocaleHack() async {
     log('init Platform.localeName: ${Platform.localeName}');
+    log_string += 'init Platform.localeName: ${Platform.localeName}\n';
     while(Platform.localeName == null){
       log('while Platform.localeName: ${Platform.localeName}');
+      log_string += 'while Platform.localeName: ${Platform.localeName}\n';
       await Future.delayed(const Duration(microseconds: 300), (){});
     }
     return  Platform.localeName;
@@ -126,6 +130,12 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               'Your locale: $locale',
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              log_string,
             ),
           ],
         ),
