@@ -50,7 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   String locale;
 
-  String log_string = '';
+  String logString = '';
 
   void _incrementCounter() {
     setState(() {
@@ -64,27 +64,43 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     setLocale();
-   //setLocaleHack();
+    //setLocaleHack();
   }
 
-  void setLocale() {    
+  void setLocale() {
     setState(() {
       locale = Platform.localeName;
-    });    
+    });
   }
 
-  Future<String> setLocaleHack() async {
-    log('init Platform.localeName: ${Platform.localeName}');
-    log_string += 'init Platform.localeName: ${Platform.localeName}\n';
-    while(Platform.localeName == null){
-      log('while Platform.localeName: ${Platform.localeName}');
-      log_string += 'while Platform.localeName: ${Platform.localeName}\n';
-      await Future.delayed(const Duration(microseconds: 300), (){});
+  void setLocaleHack() async {
+    loging('init Platform.localeName: ${Platform.localeName}');
+    loging('type Platform.localeName: ${Platform.localeName.runtimeType}');
+
+    var begin = DateTime.now();
+
+    while (Platform.localeName == null) {
+      loging('while Platform.localeName: ${Platform.localeName}');
+      await Future.delayed(const Duration(milliseconds: 1), () {});
     }
-    return  Platform.localeName;
+
+    loging('set Platform.localeName: ${Platform.localeName}');
+
+    var differenceTime = DateTime.now().difference(begin);
+
+    loging('Took time $differenceTime');
+    
+    setState(() {
+      locale = Platform.localeName;
+    });
+  }
+
+  void loging(String message) {
+    log(message);
+    logString += '$message\n';
   }
 
   @override
@@ -135,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 20,
             ),
             Text(
-              log_string,
+              logString,
             ),
           ],
         ),
