@@ -1,3 +1,6 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -45,6 +48,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  String locale;
 
   void _incrementCounter() {
     setState(() {
@@ -55,6 +59,28 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }
+
+  @override
+  void initState() { 
+    super.initState();
+    setLocale();
+   //setLocaleHack();
+  }
+
+  void setLocale() {    
+    setState(() {
+      locale = Platform.localeName;
+    });    
+  }
+
+  Future<String> setLocaleHack() async {
+    log('init Platform.localeName: ${Platform.localeName}');
+    while(Platform.localeName == null){
+      log('while Platform.localeName: ${Platform.localeName}');
+      await Future.delayed(const Duration(microseconds: 300), (){});
+    }
+    return  Platform.localeName;
   }
 
   @override
@@ -97,6 +123,9 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.display1,
+            ),
+            Text(
+              'Your locale: $locale',
             ),
           ],
         ),
